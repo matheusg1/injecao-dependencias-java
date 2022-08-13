@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class ServicoContrato {
     private ServicoPagamento servicoPagamento;
 
@@ -13,8 +15,12 @@ public class ServicoContrato {
             Double aux = divisaoBruta;
             aux = aux + servicoPagamento.calculaJuros(aux, (i+1));
             aux += servicoPagamento.calculaTaxa(aux);
-           Parcela parcela = new Parcela(aux, contrato.getData().plusMonths(i+1));
-           contrato.getParcelas().add(parcela);
+            addParcela(aux, contrato.getData().plusMonths(i+1), contrato);
         }
+    }
+
+    public static void addParcela(Double valor, LocalDate data, Contrato contrato){
+        Parcela parcela = new Parcela(valor, data);
+        contrato.getParcelas().add(parcela);
     }
 }
